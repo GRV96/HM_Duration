@@ -15,12 +15,41 @@ class HM_Duration:
 		self._minutes = minutes
 		self._regularize()
 
+	def __add__(self, other):
+		"""
+		Creates an instance that represents the sum of self and other.
+
+		Args:
+			other (HM_Duration): another duration
+
+		Returns:
+			HM_Duration: the sum of self and other
+		"""
+		return HM_Duration(
+			self._hours+other._hours, self._minutes+other._minutes)
+
 	def __eq__(self, other):
+		if not isinstance(other, self.__class__):
+			return False
+
 		return self._hours == other._hours\
 			and self._minutes == other._minutes
 
 	def __str__(self):
 		return str(self._hours) + ":" + str(self._minutes)
+
+	def __sub__(self, other):
+		"""
+		Creates an instance that represents the difference of self and other.
+
+		Args:
+			other (HM_Duration): another duration
+
+		Returns:
+			HM_Duration: the difference of self and other
+		"""
+		return HM_Duration(
+			self._hours-other._hours, self._minutes-other._minutes)
 
 	@property
 	def hours(self):

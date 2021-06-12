@@ -1,3 +1,4 @@
+from enum import Enum
 from hm_duration import HM_Duration
 
 
@@ -5,6 +6,11 @@ ACTUAL_STR = "Actual: "
 COLON = ":"
 EXPECTED_STR = "Expected: "
 PERIOD = "."
+
+
+class Operator(Enum):
+	ADD = 0
+	SUB = 1
 
 
 def hour_minute_str(hours, minutes):
@@ -20,6 +26,23 @@ def print_actual_and_expected_durations(
 def print_actual_and_expected_values(actual_value, expected_value):
 	print(ACTUAL_STR + str(actual_value))
 	print(EXPECTED_STR + str(expected_value))
+
+
+def test_arithmetic(operand1, operation, operand2, expected_result):
+	if operation == Operator.ADD:
+		actual_result = operand1 + operand2
+		operator_str = " + "
+	elif operation == Operator.SUB:
+		actual_result = operand1 - operand2
+		operator_str = " - "
+
+	try:
+		assert actual_result == expected_result
+	except AssertionError:
+		print("Artihmetic test failed for "
+			+ str(operand1) + operator_str + str(operand2))
+		print_actual_and_expected_values(actual_result, expected_result)
+		print()
 
 
 def test_eq(h1, m1, h2, m2, expected_eq):
@@ -82,8 +105,8 @@ test_instantiation(0, 7, 0, 7) # 00:07
 test_instantiation(7, 0, 7, 0) # 07:00
 test_instantiation(7, 7, 7, 7) # 07:07
 
-test_instantiation(0, 77, 1, 17) # 00:77
-test_instantiation(7, 77, 8, 17) # 07:77
+test_instantiation(0, 77, 1, 17) # 00:77 -> 01:17
+test_instantiation(7, 77, 8, 17) # 07:77 -> 08:17
 
 test_eq(0, 0, 0, 0, True) # 00:00 == 00:00
 test_eq(0, 7, 0, 7, True) # 00:07 == 00:07
@@ -100,3 +123,8 @@ test_to_minutes(0, 0, 0)
 test_to_minutes(0, 17, 17)
 test_to_minutes(1, 17, 77)
 test_to_minutes(2, 17, 137)
+
+test_arithmetic(HM_Duration(12, 17),
+	Operator.ADD, HM_Duration(3, 55), HM_Duration(16, 12))
+test_arithmetic(HM_Duration(16, 12),
+	Operator.SUB, HM_Duration(14, 57), HM_Duration(1, 15))
