@@ -1,3 +1,6 @@
+from math import floor
+
+
 _MINS_IN_HOUR = 60
 """
 The number of minutes in one hour
@@ -35,6 +38,23 @@ class HM_Duration:
 		return self._hours == other._hours\
 			and self._minutes == other._minutes
 
+	def __mul__(self, number):
+		"""
+		Creates an instance that represents the product of self by a number.
+		The result is approximated to the nearest minute.
+
+		Args:
+			number (int or float): any integral or real number
+
+		Returns:
+			HM_Duration: the product of self by a number
+		"""
+		dur_in_mins = _round_half_up(self.to_minutes() * number)
+		return HM_Duration(0, dur_in_mins)
+
+	def __rmul__(self, number):
+		return self.__mul__(number)
+
 	def __str__(self):
 		return str(self._hours) + ":" + str(self._minutes)
 
@@ -50,6 +70,20 @@ class HM_Duration:
 		"""
 		return HM_Duration(
 			self._hours-other._hours, self._minutes-other._minutes)
+
+	def __truediv__(self, number):
+		"""
+		Creates an instance that represents the quotient of self by a number.
+		The result is approximated to the nearest minute.
+
+		Args:
+			number (int or float): any integral or real number
+
+		Returns:
+			HM_Duration: the quotient of self by a number
+		"""
+		dur_in_mins = _round_half_up(self.to_minutes() / number)
+		return HM_Duration(0, dur_in_mins)
 
 	@property
 	def hours(self):
@@ -68,3 +102,9 @@ class HM_Duration:
 
 	def to_minutes(self):
 		return self._hours * _MINS_IN_HOUR + self._minutes
+
+
+def _round_half_up(n, decimals=0):
+	# Source: https://realpython.com/python-rounding/#rounding-half-up
+    multiplier = 10 ** decimals
+    return int(floor(n*multiplier + 0.5) / multiplier)

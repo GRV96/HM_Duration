@@ -11,6 +11,8 @@ PERIOD = "."
 class Operator(Enum):
 	ADD = 0
 	SUB = 1
+	MUL = 2
+	DIV = 3
 
 
 def hour_minute_str(hours, minutes):
@@ -28,13 +30,19 @@ def print_actual_and_expected_values(actual_value, expected_value):
 	print(EXPECTED_STR + str(expected_value))
 
 
-def test_arithmetic(operand1, operation, operand2, expected_result):
-	if operation == Operator.ADD:
+def test_arithmetic(operand1, operator, operand2, expected_result):
+	if operator == Operator.ADD:
 		actual_result = operand1 + operand2
 		operator_str = " + "
-	elif operation == Operator.SUB:
+	elif operator == Operator.SUB:
 		actual_result = operand1 - operand2
 		operator_str = " - "
+	elif operator == Operator.MUL:
+		actual_result = operand1 * operand2
+		operator_str = " × "
+	elif operator == Operator.DIV:
+		actual_result = operand1 / operand2
+		operator_str = " ÷ "
 
 	try:
 		assert actual_result == expected_result
@@ -128,3 +136,13 @@ test_arithmetic(HM_Duration(12, 17),
 	Operator.ADD, HM_Duration(3, 55), HM_Duration(16, 12))
 test_arithmetic(HM_Duration(16, 12),
 	Operator.SUB, HM_Duration(14, 57), HM_Duration(1, 15))
+
+test_arithmetic(HM_Duration(2, 2), Operator.MUL, 3, HM_Duration(6, 6))
+test_arithmetic(HM_Duration(2, 2), Operator.MUL, 2.5, HM_Duration(5, 5))
+test_arithmetic(HM_Duration(2, 2), Operator.MUL, 2.7, HM_Duration(5, 29))
+test_arithmetic(3, Operator.MUL, HM_Duration(2, 2), HM_Duration(6, 6))
+
+test_arithmetic(HM_Duration(6, 6), Operator.DIV, 3, HM_Duration(2, 2))
+test_arithmetic(HM_Duration(7, 7), Operator.DIV, 2, HM_Duration(3, 34))
+test_arithmetic(HM_Duration(8, 8), Operator.DIV, 0.8, HM_Duration(10, 10))
+test_arithmetic(HM_Duration(11, 11), Operator.DIV, 5.7, HM_Duration(1, 58))
