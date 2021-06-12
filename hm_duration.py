@@ -15,6 +15,10 @@ class HM_Duration:
 		self._minutes = minutes
 		self._regularize()
 
+	def __eq__(self, other):
+		return self._hours == other._hours\
+			and self._minutes == other._minutes
+
 	def __str__(self):
 		return str(self._hours) + ":" + str(self._minutes)
 
