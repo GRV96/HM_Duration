@@ -1,3 +1,4 @@
+from duration_string import duration_to_str
 from math import floor
 
 
@@ -56,7 +57,7 @@ class HM_Duration:
 		return self.__mul__(number)
 
 	def __str__(self):
-		return str(self._hours) + ":" + str(self._minutes)
+		return duration_to_str(self._hours, self._minutes)
 
 	def __sub__(self, other):
 		"""
@@ -87,10 +88,16 @@ class HM_Duration:
 
 	@property
 	def hours(self):
+		"""
+		Read-only property. This duration's number of hours.
+		"""
 		return self._hours
 
 	@property
 	def minutes(self):
+		"""
+		Read-only property. This duration's number of minutes.
+		"""
 		return self._minutes
 
 	def _regularize(self):
