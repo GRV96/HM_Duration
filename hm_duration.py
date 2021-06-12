@@ -33,3 +33,9 @@ class HM_Duration:
 	def _regularize(self):
 		self._hours += self._minutes // _MINS_IN_HOUR
 		self._minutes = self._minutes % _MINS_IN_HOUR
+
+	def to_hours(self):
+		return self._hours + self._minutes / _MINS_IN_HOUR
+
+	def to_minutes(self):
+		return self._hours * _MINS_IN_HOUR + self._minutes
