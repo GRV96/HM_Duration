@@ -36,10 +36,10 @@ def test_arithmetic(operand1, operator, operand2, expected_result):
 		operator_str = " - "
 	elif operator == Operator.MUL:
 		actual_result = operand1 * operand2
-		operator_str = " ? "
+		operator_str = " × "
 	elif operator == Operator.DIV:
 		actual_result = operand1 / operand2
-		operator_str = " ? "
+		operator_str = " ÷ "
 
 	try:
 		assert actual_result == expected_result

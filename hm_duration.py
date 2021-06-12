@@ -15,6 +15,14 @@ class HM_Duration:
 	"""
 
 	def __init__(self, hours, minutes):
+		"""
+		The constructor needs the number of hours and the number of minutes
+		that make a duration.
+
+		Args:
+			hours (int): a number of hours
+			minutes (int): a number of minutes
+		"""
 		self._hours = hours
 		self._minutes = minutes
 		self._regularize()
@@ -101,13 +109,28 @@ class HM_Duration:
 		return self._minutes
 
 	def _regularize(self):
+		"""
+		Makes sure that the number of minutes is less than 60.
+		"""
 		self._hours += self._minutes // _MINS_IN_HOUR
 		self._minutes = self._minutes % _MINS_IN_HOUR
 
 	def to_hours(self):
+		"""
+		Converts this duration to a real number of hours.
+
+		Returns:
+			float: a real number of hours equal to this duration
+		"""
 		return self._hours + self._minutes / _MINS_IN_HOUR
 
 	def to_minutes(self):
+		"""
+		Converts this duration to an integral number of minutes.
+
+		Returns:
+			float: an integral number of minutes equal to this duration
+		"""
 		return self._hours * _MINS_IN_HOUR + self._minutes
 
 
