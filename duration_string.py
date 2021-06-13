@@ -1,6 +1,6 @@
 """
-This module makes string representations of durations in hours and minutes in
-the format "xx:xx", where each x is a digit.
+This module makes string representations of durations in hours and minutes
+conform to the format "xx:xx", where each x is a digit.
 """
 
 
@@ -12,9 +12,10 @@ _ZERO_STR = "0"
 def duration_to_str(hours, minutes):
 	"""
 	Makes a formatted string representation of a duration in hours and
-	minutes. The string's format is "xx:xx", where each x is a digit. If the
-	number of hours and the number of minutes are negative, a minus sign is
-	added at the beginning.
+	minutes. This string's format is "xx:xx", where each x is a digit.
+	However, the number of hours is written with more than two digits if its
+	absolute value is greater than or equal to 100. If the number of hours or
+	the number of minutes is negative, a minus sign is added at the beginning.
 
 	Args:
 		hours (int): the number of hours
@@ -37,7 +38,7 @@ def _format_duration_int_str(an_int):
 	Formats the string representation of integers that is part of the string
 	representation of durations. If the integer contains one digit, a 0 is
 	added to the string's beginning. The returned string always represents the
-	absolue value.
+	absolute value.
 
 	Args:
 		an_int (int): any integral number

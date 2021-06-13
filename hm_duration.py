@@ -129,7 +129,7 @@ class HM_Duration:
 		Converts this duration to an integral number of minutes.
 
 		Returns:
-			float: an integral number of minutes equal to this duration
+			int: an integral number of minutes equal to this duration
 		"""
 		return self._hours * _MINS_IN_HOUR + self._minutes
 

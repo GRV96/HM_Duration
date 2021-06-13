@@ -128,6 +128,8 @@ test_string_rep(0, 0, "00:00")
 test_string_rep(1, 1, "01:01")
 test_string_rep(1, 59, "01:59")
 test_string_rep(1, 60, "02:00")
+test_string_rep(99, 0, "99:00")
+test_string_rep(100, 0, "100:00")
 
 test_eq(0, 0, 0, 0, True) # 00:00 == 00:00
 test_eq(0, 7, 0, 7, True) # 00:07 == 00:07
