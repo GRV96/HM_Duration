@@ -4,7 +4,6 @@ from hm_duration import HM_Duration
 
 
 ACTUAL_STR = "Actual: "
-COLON = ":"
 EXPECTED_STR = "Expected: "
 PERIOD = "."
 
