@@ -77,15 +77,27 @@ def test_instantiation(hours, minutes, expected_h, expected_m):
 		print()
 
 
-def test_string_rep(hours, minutes, expected_rep):
+def test_repr(hours, minutes, expected_repr):
 	duration = HM_Duration(hours, minutes)
-	actual_rep = str(duration)
+	actual_repr = repr(duration)
 
 	try:
-		assert actual_rep == expected_rep
+		assert actual_repr == expected_repr
+	except AssertionError:
+		print("repr test failed.")
+		print_actual_and_expected_values(actual_repr, expected_repr)
+		print()
+
+
+def test_string_rep(hours, minutes, expected_str):
+	duration = HM_Duration(hours, minutes)
+	actual_str = str(duration)
+
+	try:
+		assert actual_str == expected_str
 	except AssertionError:
 		print("String representation test failed.")
-		print_actual_and_expected_values(actual_rep, expected_rep)
+		print_actual_and_expected_values(actual_str, expected_str)
 		print()
 
 
@@ -123,10 +135,15 @@ test_instantiation(7, 7, 7, 7) # 07:07
 test_instantiation(0, 77, 1, 17) # 00:77 -> 01:17
 test_instantiation(7, 77, 8, 17) # 07:77 -> 08:17
 
+test_repr(0, 7, "HM_Duration(0, 7)")
+test_repr(10, 83, "HM_Duration(11, 23)")
+
 test_string_rep(0, 0, "00:00")
 test_string_rep(1, 1, "01:01")
 test_string_rep(1, 59, "01:59")
 test_string_rep(1, 60, "02:00")
+test_string_rep(9, 0, "09:00")
+test_string_rep(10, 0, "10:00")
 test_string_rep(99, 0, "99:00")
 test_string_rep(100, 0, "100:00")
 

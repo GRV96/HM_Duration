@@ -64,6 +64,10 @@ class HM_Duration:
 	def __rmul__(self, number):
 		return self.__mul__(number)
 
+	def __repr__(self):
+		return self.__class__.__name__ +\
+			"(" + str(self._hours) + ", " + str(self._minutes) + ")"
+
 	def __str__(self):
 		return duration_to_str(self._hours, self._minutes)
 
