@@ -10,8 +10,8 @@ The number of minutes in one hour
 
 class HM_Duration:
 	"""
-	This class represents durations as a number of hours and minutes. It also
-	allows to perform arithmetic operations on them.
+	This class represents durations as a number of hours and a number of
+	minutes. It also allows to perform arithmetic operations on them.
 	"""
 
 	def __init__(self, hours, minutes):
