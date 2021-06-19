@@ -1,6 +1,5 @@
-from duration_string import duration_to_str
 from enum import Enum
-from hm_duration import HM_Duration
+from src import duration_to_str, HM_Duration
 
 
 ACTUAL_STR = "Actual: "
@@ -161,3 +160,5 @@ test_arithmetic(HM_Duration(6, 6), Operator.DIV, 3, HM_Duration(2, 2))
 test_arithmetic(HM_Duration(7, 7), Operator.DIV, 2, HM_Duration(3, 34))
 test_arithmetic(HM_Duration(8, 8), Operator.DIV, 0.8, HM_Duration(10, 10))
 test_arithmetic(HM_Duration(11, 11), Operator.DIV, 5.7, HM_Duration(1, 58))
+
+print("Tests done")

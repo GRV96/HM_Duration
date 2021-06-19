@@ -1,4 +1,4 @@
-from duration_string import duration_to_str
+from .duration_string import duration_to_str
 from math import floor
 
 
