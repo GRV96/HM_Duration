@@ -11,20 +11,34 @@ The number of minutes in one hour
 class HM_Duration:
 	"""
 	This class represents durations as a number of hours and a number of
-	minutes. It also allows to perform arithmetic operations on them.
+	minutes. It allows to perform arithmetic operations on them and offers
+	other functionalities.
 	"""
 
 	def __init__(self, hours, minutes):
 		"""
 		The constructor needs the number of hours and the number of minutes
-		that make a duration.
+		that make a duration. Give two negative arguments to make a negative
+		duration.
 
 		Args:
 			hours (int): a number of hours
 			minutes (int): a number of minutes
+
+		Raises:
+			ValueError: if hours and minutes do not have the same sign
 		"""
-		self._hours = hours
-		self._minutes = minutes
+		if hours * minutes < 0:
+			raise ValueError(
+				"Arguments hours and minutes must have the same sign.")
+
+		if hours < 0 or minutes < 0:
+			self._sign = -1
+		else:
+			self._sign = 1
+
+		self._hours = abs(hours)
+		self._minutes = abs(minutes)
 		self._regularize()
 
 	def __add__(self, other):
@@ -37,14 +51,15 @@ class HM_Duration:
 		Returns:
 			HM_Duration: the sum of self and other
 		"""
-		return HM_Duration(
-			self._hours+other._hours, self._minutes+other._minutes)
+		sum_as_mins = self.to_minutes() + other.to_minutes()
+		return HM_Duration(0, sum_as_mins)
 
 	def __eq__(self, other):
 		if not isinstance(other, self.__class__):
 			return False
 
-		return self._hours == other._hours\
+		return self._sign == other._sign\
+			and self._hours == other._hours\
 			and self._minutes == other._minutes
 
 	def __mul__(self, number):
@@ -58,18 +73,18 @@ class HM_Duration:
 		Returns:
 			HM_Duration: the product of self by a number
 		"""
-		dur_in_mins = _round_half_up(self.to_minutes() * number)
-		return HM_Duration(0, dur_in_mins)
+		prod_as_mins = int(_round_half_up(self.to_minutes() * number))
+		return HM_Duration(0, prod_as_mins)
 
 	def __rmul__(self, number):
 		return self.__mul__(number)
 
 	def __repr__(self):
 		return self.__class__.__name__ +\
-			"(" + str(self._hours) + ", " + str(self._minutes) + ")"
+			"(" + str(self.hours) + ", " + str(self.minutes) + ")"
 
 	def __str__(self):
-		return duration_to_str(self._hours, self._minutes)
+		return duration_to_str(self.hours, self.minutes)
 
 	def __sub__(self, other):
 		"""
@@ -81,8 +96,8 @@ class HM_Duration:
 		Returns:
 			HM_Duration: the difference of self and other
 		"""
-		return HM_Duration(
-			self._hours-other._hours, self._minutes-other._minutes)
+		diff_as_mins = self.to_minutes() - other.to_minutes()
+		return HM_Duration(0, diff_as_mins)
 
 	def __truediv__(self, number):
 		"""
@@ -95,22 +110,22 @@ class HM_Duration:
 		Returns:
 			HM_Duration: the quotient of self by a number
 		"""
-		dur_in_mins = _round_half_up(self.to_minutes() / number)
-		return HM_Duration(0, dur_in_mins)
+		quo_as_mins = int(_round_half_up(self.to_minutes() / number))
+		return HM_Duration(0, quo_as_mins)
 
 	@property
 	def hours(self):
 		"""
-		Read-only property. This duration's number of hours.
+		This read-only property returns this duration's number of hours.
 		"""
-		return self._hours
+		return self._sign * self._hours
 
 	@property
 	def minutes(self):
 		"""
-		Read-only property. This duration's number of minutes.
+		This read-only property returns this duration's number of minutes.
 		"""
-		return self._minutes
+		return self._sign * self._minutes
 
 	def _regularize(self):
 		"""
@@ -126,7 +141,8 @@ class HM_Duration:
 		Returns:
 			float: a real number of hours equal to this duration
 		"""
-		return self._hours + self._minutes / _MINS_IN_HOUR
+		num_of_hours = self._hours + self._minutes / _MINS_IN_HOUR
+		return self._sign * num_of_hours
 
 	def to_minutes(self):
 		"""
@@ -135,10 +151,11 @@ class HM_Duration:
 		Returns:
 			int: an integral number of minutes equal to this duration
 		"""
-		return self._hours * _MINS_IN_HOUR + self._minutes
+		num_of_minutes = self._hours * _MINS_IN_HOUR + self._minutes
+		return self._sign * num_of_minutes
 
 
 def _round_half_up(n, decimals=0):
 	# Source: https://realpython.com/python-rounding/#rounding-half-up
     multiplier = 10 ** decimals
-    return int(floor(n*multiplier + 0.5) / multiplier)
+    return floor(n*multiplier + 0.5) / multiplier

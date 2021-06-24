@@ -36,9 +36,9 @@ def duration_to_str(hours, minutes):
 def _format_duration_int_str(an_int):
 	"""
 	Formats the string representation of integers that is part of the string
-	representation of durations. If the integer contains one digit, a 0 is
-	added to the string's beginning. The returned string always represents the
-	absolute value.
+	representation of durations. If the given integer contains one digit, a 0
+	is added to the string's beginning. The returned string always represents
+	the absolute value.
 
 	Args:
 		an_int (int): any integral number
