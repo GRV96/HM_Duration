@@ -214,6 +214,8 @@ test_arithmetic(HM_Duration(14, 57),
 test_arithmetic(HM_Duration(14, 57),
 	Operator.SUB, HM_Duration(-1, -15), HM_Duration(16, 12))
 
+test_arithmetic(0, Operator.MUL, HM_Duration(2, 2), HM_Duration(0, 0))
+
 test_arithmetic(HM_Duration(2, 2), Operator.MUL, 3, HM_Duration(6, 6))
 test_arithmetic(HM_Duration(2, 2), Operator.MUL, 2.5, HM_Duration(5, 5))
 test_arithmetic(HM_Duration(2, 2), Operator.MUL, 2.7, HM_Duration(5, 29))
