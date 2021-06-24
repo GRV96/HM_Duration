@@ -135,8 +135,18 @@ test_instantiation(7, 7, 7, 7) # 07:07
 test_instantiation(0, 77, 1, 17) # 00:77 -> 01:17
 test_instantiation(7, 77, 8, 17) # 07:77 -> 08:17
 
+test_instantiation(0, -7, 0, -7) # -00:07
+test_instantiation(-7, 0, -7, 0) # -07:00
+test_instantiation(-7, -7, -7, -7) # -07:07
+
+test_instantiation(0, -77, -1, -17) # -00:77 -> -01:17
+test_instantiation(-7, -77, -8, -17) # -07:77 -> -08:17
+
 test_repr(0, 7, "HM_Duration(0, 7)")
 test_repr(10, 83, "HM_Duration(11, 23)")
+
+test_repr(0, -7, "HM_Duration(0, -7)")
+test_repr(-10, -83, "HM_Duration(-11, -23)")
 
 test_string_rep(0, 0, "00:00")
 test_string_rep(1, 1, "01:01")
@@ -147,10 +157,24 @@ test_string_rep(10, 0, "10:00")
 test_string_rep(99, 0, "99:00")
 test_string_rep(100, 0, "100:00")
 
+test_string_rep(-1, -1, "-01:01")
+test_string_rep(-1, -59, "-01:59")
+test_string_rep(-1, -60, "-02:00")
+test_string_rep(-9, 0, "-09:00")
+test_string_rep(-10, 0, "-10:00")
+test_string_rep(-99, 0, "-99:00")
+test_string_rep(-100, 0, "-100:00")
+
 test_eq(0, 0, 0, 0, True) # 00:00 == 00:00
 test_eq(0, 7, 0, 7, True) # 00:07 == 00:07
 test_eq(7, 1, 7, 0, False) # 07:01 != 07:00
 test_eq(8, 7, 7, 7, False) # 08:07 != 07:07
+
+test_eq(-7, -1, 7, 1, False) # -07:01 != 07:01
+
+test_eq(0, -7, 0, -7, True) # -00:07 == -00:07
+test_eq(-7, -1, -7, 0, False) # -07:01 != -07:00
+test_eq(-8, -7, -7, -7, False) # -08:07 != -07:07
 
 test_to_hours(0, 0, 0.0)
 test_to_hours(0, 15, 0.25)
@@ -158,24 +182,72 @@ test_to_hours(0, 17, 0.28333333333333333333333333333333)
 test_to_hours(2, 0, 2.0)
 test_to_hours(2, 30, 2.50)
 
+test_to_hours(0, -15, -0.25)
+test_to_hours(0, -17, -0.28333333333333333333333333333333)
+test_to_hours(-2, 0, -2.0)
+test_to_hours(-2, -30, -2.50)
+
 test_to_minutes(0, 0, 0)
 test_to_minutes(0, 17, 17)
 test_to_minutes(1, 17, 77)
 test_to_minutes(2, 17, 137)
 
+test_to_minutes(0, -17, -17)
+test_to_minutes(-1, -17, -77)
+test_to_minutes(-2, -17, -137)
+
+test_arithmetic(HM_Duration(12, 17),
+	Operator.ADD, HM_Duration(0, 0), HM_Duration(12, 17))
 test_arithmetic(HM_Duration(12, 17),
 	Operator.ADD, HM_Duration(3, 55), HM_Duration(16, 12))
+test_arithmetic(HM_Duration(12, 17),
+	Operator.ADD, HM_Duration(-3, -55), HM_Duration(8, 22))
+test_arithmetic(HM_Duration(3, 55),
+	Operator.ADD, HM_Duration(-12, -17), HM_Duration(-8, -22))
+
+test_arithmetic(HM_Duration(16, 12),
+	Operator.SUB, HM_Duration(0, 0), HM_Duration(16, 12))
 test_arithmetic(HM_Duration(16, 12),
 	Operator.SUB, HM_Duration(14, 57), HM_Duration(1, 15))
+test_arithmetic(HM_Duration(14, 57),
+	Operator.SUB, HM_Duration(16, 12), HM_Duration(-1, -15))
+test_arithmetic(HM_Duration(14, 57),
+	Operator.SUB, HM_Duration(-1, -15), HM_Duration(16, 12))
 
 test_arithmetic(HM_Duration(2, 2), Operator.MUL, 3, HM_Duration(6, 6))
 test_arithmetic(HM_Duration(2, 2), Operator.MUL, 2.5, HM_Duration(5, 5))
 test_arithmetic(HM_Duration(2, 2), Operator.MUL, 2.7, HM_Duration(5, 29))
-test_arithmetic(3, Operator.MUL, HM_Duration(2, 2), HM_Duration(6, 6))
+
+test_arithmetic(-3, Operator.MUL, HM_Duration(2, 2), HM_Duration(-6, -6))
+test_arithmetic(-2.5, Operator.MUL, HM_Duration(2, 2), HM_Duration(-5, -5))
+test_arithmetic(-2.7, Operator.MUL, HM_Duration(2, 2), HM_Duration(-5, -29))
+
+test_arithmetic(HM_Duration(-2, -2), Operator.MUL, 3, HM_Duration(-6, -6))
+test_arithmetic(HM_Duration(-2, -2), Operator.MUL, 2.5, HM_Duration(-5, -5))
+test_arithmetic(HM_Duration(-2, -2), Operator.MUL, 2.7, HM_Duration(-5, -29))
+
+test_arithmetic(-3, Operator.MUL, HM_Duration(-2, -2), HM_Duration(6, 6))
+test_arithmetic(-2.5, Operator.MUL, HM_Duration(-2, -2), HM_Duration(5, 5))
+test_arithmetic(-2.7, Operator.MUL, HM_Duration(-2, -2), HM_Duration(5, 29))
 
 test_arithmetic(HM_Duration(6, 6), Operator.DIV, 3, HM_Duration(2, 2))
 test_arithmetic(HM_Duration(7, 7), Operator.DIV, 2, HM_Duration(3, 34))
 test_arithmetic(HM_Duration(8, 8), Operator.DIV, 0.8, HM_Duration(10, 10))
 test_arithmetic(HM_Duration(11, 11), Operator.DIV, 5.7, HM_Duration(1, 58))
 
-print("Tests done")
+test_arithmetic(HM_Duration(6, 6), Operator.DIV, -3, HM_Duration(-2, -2))
+test_arithmetic(HM_Duration(7, 7), Operator.DIV, -2, HM_Duration(-3, -33))
+test_arithmetic(HM_Duration(8, 8), Operator.DIV, -0.8, HM_Duration(-10, -10))
+test_arithmetic(HM_Duration(11, 11), Operator.DIV, -5.7, HM_Duration(-1, -58))
+
+test_arithmetic(HM_Duration(-6, -6), Operator.DIV, 3, HM_Duration(-2, -2))
+test_arithmetic(HM_Duration(-7, -7), Operator.DIV, 2, HM_Duration(-3, -33))
+test_arithmetic(HM_Duration(-8, -8), Operator.DIV, 0.8, HM_Duration(-10, -10))
+test_arithmetic(HM_Duration(-11, -11), Operator.DIV, 5.7, HM_Duration(-1, -58))
+
+test_arithmetic(HM_Duration(-6, -6), Operator.DIV, -3, HM_Duration(2, 2))
+test_arithmetic(HM_Duration(-7, -7), Operator.DIV, -2, HM_Duration(3, 34))
+test_arithmetic(HM_Duration(-8, -8), Operator.DIV, -0.8, HM_Duration(10, 10))
+test_arithmetic(HM_Duration(-11, -11), Operator.DIV, -5.7, HM_Duration(1, 58))
+
+print("HM_Duration tests done")

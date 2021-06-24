@@ -56,7 +56,8 @@ class HM_Duration:
 		if not isinstance(other, self.__class__):
 			return False
 
-		return self._hours == other._hours\
+		return self._sign == other._sign\
+			and self._hours == other._hours\
 			and self._minutes == other._minutes
 
 	def __mul__(self, number):
