@@ -11,13 +11,15 @@ The number of minutes in one hour
 class HM_Duration:
 	"""
 	This class represents durations as a number of hours and a number of
-	minutes. It also allows to perform arithmetic operations on them.
+	minutes. It allows to perform arithmetic operations on them and offers
+	other functionalities.
 	"""
 
 	def __init__(self, hours, minutes):
 		"""
 		The constructor needs the number of hours and the number of minutes
-		that make a duration.
+		that make a duration. Give two negative arguments to make a negative
+		duration.
 
 		Args:
 			hours (int): a number of hours
