@@ -4,9 +4,48 @@ conform to the format "xx:xx", where each x is a digit.
 """
 
 
+from re import fullmatch
+
+
 _COLON = ":"
 _HYPHEN = "-"
 _ZERO_STR = "0"
+
+DUR_STR_PATTERN = "-?\d{2,}:\d{2}"
+"""
+All duration strings must match this pattern.
+"""
+
+
+def duration_from_str(dur_str):
+	if not fullmatch(DUR_STR_PATTERN, dur_str):
+		raise ValueError("Argument '" + dur_str\
+			+ "' does not match regex '" + DUR_STR_PATTERN + "'.")
+
+	if dur_str[0] == _HYPHEN:
+		postive = False
+		offset = 1
+	else:
+		postive = True
+		offset = 0
+
+	colon_index = dur_str.index(_COLON)
+
+	hour_str = dur_str[offset: colon_index]
+	if len(hour_str) == 2 and hour_str[0] == _ZERO_STR:
+		hour_str = hour_str[1]
+	hours = int(hour_str)
+
+	min_str = dur_str[colon_index+1:]
+	if min_str[0] == _ZERO_STR:
+		min_str = min_str[1]
+	minutes = int(min_str)
+
+	if not postive:
+		hours *= -1
+		minutes *= -1
+
+	return hours, minutes
 
 
 def duration_to_str(hours, minutes):
