@@ -14,7 +14,7 @@ _COLON = ":"
 _HYPHEN = "-"
 _ZERO_STR = "0"
 
-DURATION_STR_PATTERN = "-?\d{2,}:\d{2}"
+DURATION_STR_PATTERN = "-?\d{1,}:\d{2}"
 """
 The string representation of durations must match this regular expression.
 """
