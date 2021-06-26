@@ -1,4 +1,4 @@
-from .duration_string import duration_to_str
+from .duration_string import duration_from_str, duration_to_str
 from math import floor
 
 
@@ -11,8 +11,8 @@ The number of minutes in one hour
 class HM_Duration:
 	"""
 	This class represents durations as a number of hours and a number of
-	minutes. It allows to perform arithmetic operations on them and offers
-	other functionalities.
+	minutes. Among other functionalities, it offers arithmetic operations,
+	string representation and instantiation from a string representation.
 	"""
 
 	def __init__(self, hours, minutes):
@@ -113,6 +113,24 @@ class HM_Duration:
 		quo_as_mins = int(_round_half_up(self.to_minutes() / number))
 		return HM_Duration(0, quo_as_mins)
 
+	@staticmethod
+	def from_str(dur_str):
+		"""
+		Creates an instance from the given duration string representation.
+
+		Args:
+			dur_str (str): a string that represents a duration in hours and
+				minutes
+
+		Returns:
+			HM_Duration: the duration represented by dur_str
+
+		Raises:
+			ValueError: if str_repr_duration(dur_str) returns False
+		"""
+		hours, minutes = duration_from_str(dur_str)
+		return HM_Duration(hours, minutes)
+
 	@property
 	def hours(self):
 		"""
@@ -129,7 +147,7 @@ class HM_Duration:
 
 	def _regularize(self):
 		"""
-		Makes sure that the number of minutes is less than 60.
+		Makes sure that the number of minutes ranges from 0 to 59.
 		"""
 		self._hours += self._minutes // _MINS_IN_HOUR
 		self._minutes = self._minutes % _MINS_IN_HOUR
