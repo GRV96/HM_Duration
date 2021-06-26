@@ -1,6 +1,9 @@
 """
-This module makes string representations of durations in hours and minutes
-conform to the format "xx:xx", where each x is a digit.
+This module deals with the string representation of durations in hours and
+minutes. Duration strings must conform to the pattern "xx:xx", where each x is
+a digit. However, the number of hours contains more than two digits if its
+absolute value is greater than or equal to 100. If a duration is negative,
+there is a minus sign at the beginning of its string representation.
 """
 
 
@@ -11,16 +14,34 @@ _COLON = ":"
 _HYPHEN = "-"
 _ZERO_STR = "0"
 
-DUR_STR_PATTERN = "-?\d{2,}:\d{2}"
+_DUR_STR_PATTERN = "-?\d{2,}:\d{2}"
 """
-All duration strings must match this pattern.
+This regular expression defines the pattern described in the module's
+documentation.
 """
 
 
 def duration_from_str(dur_str):
-	if not fullmatch(DUR_STR_PATTERN, dur_str):
+	"""
+	Extracts the number of hours and the number of minutes from a duration's
+	string representation. The given string must match the description in the
+	module's documentation.
+
+	Args:
+		dur_str (str): a duration's string representation
+
+	Returns:
+		tuple:
+			[0]: (int) the number of hours
+			[1]: (int) the number of minutes
+
+	Raises:
+		ValueError: if dur_str does not match the regular expression
+			"-?\d{2,}:\d{2}"
+	"""
+	if not fullmatch(_DUR_STR_PATTERN, dur_str):
 		raise ValueError("Argument '" + dur_str\
-			+ "' does not match regex '" + DUR_STR_PATTERN + "'.")
+			+ "' does not match regex '" + _DUR_STR_PATTERN + "'.")
 
 	if dur_str[0] == _HYPHEN:
 		postive = False
@@ -51,10 +72,8 @@ def duration_from_str(dur_str):
 def duration_to_str(hours, minutes):
 	"""
 	Makes a formatted string representation of a duration in hours and
-	minutes. This string's format is "xx:xx", where each x is a digit.
-	However, the number of hours is written with more than two digits if its
-	absolute value is greater than or equal to 100. If the number of hours or
-	the number of minutes is negative, a minus sign is added at the beginning.
+	minutes. The generated string matches the pattern described in the
+	module's documentation.
 
 	Args:
 		hours (int): the number of hours

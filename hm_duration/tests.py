@@ -62,6 +62,20 @@ def test_eq(h1, m1, h2, m2, expected_eq):
 		print()
 
 
+def test_from_str(dur_str, expected_h, expected_m):
+	duration = HM_Duration.from_str(dur_str)
+	actual_h = duration.hours
+	actual_m = duration.minutes
+
+	try:
+		assert actual_h == expected_h and actual_m == expected_m
+	except AssertionError:
+		print("Instantiation from a string failed for '" + dur_str + "'.")
+		print_actual_and_expected_durations(
+			actual_h, actual_m, expected_h, expected_m)
+		print()
+
+
 def test_instantiation(hours, minutes, expected_h, expected_m):
 	duration = HM_Duration(hours, minutes)
 	actual_h = duration.hours
@@ -141,6 +155,23 @@ test_instantiation(-7, -7, -7, -7) # -07:07
 
 test_instantiation(0, -77, -1, -17) # -00:77 -> -01:17
 test_instantiation(-7, -77, -8, -17) # -07:77 -> -08:17
+
+test_from_str("00:00", 0, 0)
+test_from_str("00:07", 0, 7)
+test_from_str("07:00", 7, 0)
+test_from_str("07:07", 7, 7)
+test_from_str("07:67", 8, 7)
+test_from_str("19:23", 19, 23)
+test_from_str("99:00", 99, 0)
+test_from_str("100:00", 100, 0)
+
+test_from_str("-00:07", 0, -7)
+test_from_str("-07:00", -7, 0)
+test_from_str("-07:07", -7, -7)
+test_from_str("-07:67", -8, -7)
+test_from_str("-19:23", -19, -23)
+test_from_str("-99:00", -99, 0)
+test_from_str("-100:00", -100, 0)
 
 test_repr(0, 7, "HM_Duration(0, 7)")
 test_repr(10, 83, "HM_Duration(11, 23)")

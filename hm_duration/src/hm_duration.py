@@ -1,4 +1,4 @@
-from .duration_string import duration_to_str
+from .duration_string import duration_from_str, duration_to_str
 from math import floor
 
 
@@ -112,6 +112,11 @@ class HM_Duration:
 		"""
 		quo_as_mins = int(_round_half_up(self.to_minutes() / number))
 		return HM_Duration(0, quo_as_mins)
+
+	@staticmethod
+	def from_str(dur_str):
+		hours, minutes = duration_from_str(dur_str)
+		return HM_Duration(hours, minutes)
 
 	@property
 	def hours(self):
