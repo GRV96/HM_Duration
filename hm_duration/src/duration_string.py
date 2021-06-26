@@ -115,7 +115,7 @@ def str_repr_duration(a_str):
 	"""
 	Determines whether the given string represents a duration in hours and
 	minutes. It does if and only if it matches the regular expression stored
-	in constant DURATION_STR_PATTERN.
+	in constant DURATION_STR_PATTERN. The match is verified by re.fullmatch.
 
 	Args:
 		a_str (str): a string that should represent a duration
