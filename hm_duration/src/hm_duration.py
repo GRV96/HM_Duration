@@ -115,6 +115,20 @@ class HM_Duration:
 
 	@staticmethod
 	def from_str(dur_str):
+		"""
+		Creates an instance from the given duration string representation.
+
+		Args:
+			dur_str (str): a string that represents a duration in hours and
+				minutes
+
+		Returns:
+			HM_Duration: the duration represented by dur_str
+
+		Raises:
+			ValueError: if dur_str does not match regular expression
+				"-?\d{2,}:\d{2}"
+		"""
 		hours, minutes = duration_from_str(dur_str)
 		return HM_Duration(hours, minutes)
 

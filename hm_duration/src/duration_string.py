@@ -36,10 +36,10 @@ def duration_from_str(dur_str):
 			[1]: (int) the number of minutes
 
 	Raises:
-		ValueError: if dur_str does not match the regular expression
+		ValueError: if dur_str does not match regular expression
 			"-?\d{2,}:\d{2}"
 	"""
-	if not fullmatch(_DUR_STR_PATTERN, dur_str):
+	if not str_repr_duration(dur_str):
 		raise ValueError("Argument '" + dur_str\
 			+ "' does not match regex '" + _DUR_STR_PATTERN + "'.")
 
@@ -111,3 +111,17 @@ def _format_duration_int_str(an_int):
 		int_str = _ZERO_STR + int_str
 
 	return int_str
+
+
+def str_repr_duration(a_str):
+	"""
+	Determines whether the given string represents a duration in hours and
+	minutes. It does if it matches regular expression "-?\d{2,}:\d{2}".
+
+	Args:
+		a_str (str): a string that should represent a duration
+
+	Returns:
+		bool: True if a_str represents a duration, False otherwise
+	"""
+	return fullmatch(_DUR_STR_PATTERN, a_str)
