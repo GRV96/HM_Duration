@@ -70,8 +70,8 @@ def duration_from_str(dur_str):
 def duration_to_str(hours, minutes):
 	"""
 	Makes a formatted string representation of a duration in hours and
-	minutes. The generated string matches the pattern described in the
-	module's documentation.
+	minutes. The generated string matches regular expression
+	DURATION_STR_PATTERN.
 
 	Args:
 		hours (int): the number of hours
@@ -114,8 +114,8 @@ def _int_to_formatted_str(an_int):
 def str_repr_duration(a_str):
 	"""
 	Determines whether the given string represents a duration in hours and
-	minutes. It does if and only if it matches the regular expression stored
-	in constant DURATION_STR_PATTERN. The match is verified by re.fullmatch.
+	minutes. It does if and only if it matches regular expression
+	DURATION_STR_PATTERN. The match is verified by re.fullmatch.
 
 	Args:
 		a_str (str): a string that should represent a duration
