@@ -14,18 +14,17 @@ _COLON = ":"
 _HYPHEN = "-"
 _ZERO_STR = "0"
 
-_DUR_STR_PATTERN = "-?\d{2,}:\d{2}"
+DURATION_STR_PATTERN = "-?\d{2,}:\d{2}"
 """
-This regular expression defines the pattern described in the module's
-documentation.
+The string representation of durations must match this regular expression.
 """
 
 
 def duration_from_str(dur_str):
 	"""
 	Extracts the number of hours and the number of minutes from a duration's
-	string representation. The given string must match the description in the
-	module's documentation.
+	string representation. Function str_repr_duration must return True for the
+	given string.
 
 	Args:
 		dur_str (str): a duration's string representation
@@ -36,12 +35,11 @@ def duration_from_str(dur_str):
 			[1]: (int) the number of minutes
 
 	Raises:
-		ValueError: if dur_str does not match regular expression
-			"-?\d{2,}:\d{2}"
+		ValueError: if str_repr_duration(dur_str) returns False
 	"""
 	if not str_repr_duration(dur_str):
 		raise ValueError("Argument '" + dur_str\
-			+ "' does not match regex '" + _DUR_STR_PATTERN + "'.")
+			+ "' does not match regex '" + DURATION_STR_PATTERN + "'.")
 
 	if dur_str[0] == _HYPHEN:
 		postive = False
@@ -82,8 +80,8 @@ def duration_to_str(hours, minutes):
 	Returns:
 		str: the string representation of a duration
 	"""
-	dur_str = _format_duration_int_str(hours)\
-		+ _COLON + _format_duration_int_str(minutes)
+	dur_str = _int_to_formatted_str(hours)\
+		+ _COLON + _int_to_formatted_str(minutes)
 
 	if hours < 0 or minutes < 0:
 		dur_str = _HYPHEN + dur_str
@@ -91,18 +89,18 @@ def duration_to_str(hours, minutes):
 	return dur_str
 
 
-def _format_duration_int_str(an_int):
+def _int_to_formatted_str(an_int):
 	"""
-	Formats the string representation of integers that is part of the string
-	representation of durations. If the given integer contains one digit, a 0
-	is added to the string's beginning. The returned string always represents
-	the absolute value.
+	Makes a formatted string representation of integers that is part of the
+	string representation of durations. If the given integer contains one
+	digit, a 0 is added to the string's beginning. The returned string always
+	represents the absolute value.
 
 	Args:
 		an_int (int): any integral number
 
 	Returns:
-		str: a formatted string representation of an_int
+		str: the string representation of the absolute value of an_int
 	"""
 	abs_int = abs(an_int)
 	int_str = str(abs_int)
@@ -116,7 +114,8 @@ def _format_duration_int_str(an_int):
 def str_repr_duration(a_str):
 	"""
 	Determines whether the given string represents a duration in hours and
-	minutes. It does if it matches regular expression "-?\d{2,}:\d{2}".
+	minutes. It does if and only if it matches the regular expression stored
+	in constant DURATION_STR_PATTERN.
 
 	Args:
 		a_str (str): a string that should represent a duration
@@ -124,4 +123,4 @@ def str_repr_duration(a_str):
 	Returns:
 		bool: True if a_str represents a duration, False otherwise
 	"""
-	return fullmatch(_DUR_STR_PATTERN, a_str) is not None
+	return fullmatch(DURATION_STR_PATTERN, a_str) is not None

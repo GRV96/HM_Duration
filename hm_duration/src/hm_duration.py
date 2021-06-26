@@ -126,8 +126,7 @@ class HM_Duration:
 			HM_Duration: the duration represented by dur_str
 
 		Raises:
-			ValueError: if dur_str does not match regular expression
-				"-?\d{2,}:\d{2}"
+			ValueError: if str_repr_duration(dur_str) returns False
 		"""
 		hours, minutes = duration_from_str(dur_str)
 		return HM_Duration(hours, minutes)
@@ -148,7 +147,7 @@ class HM_Duration:
 
 	def _regularize(self):
 		"""
-		Makes sure that the number of minutes is less than 60.
+		Makes sure that the number of minutes ranges from 0 to 59.
 		"""
 		self._hours += self._minutes // _MINS_IN_HOUR
 		self._minutes = self._minutes % _MINS_IN_HOUR

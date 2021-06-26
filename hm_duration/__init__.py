@@ -1,1 +1,1 @@
-from .src import HM_Duration, str_repr_duration
+from .src import HM_Duration, DURATION_STR_PATTERN, str_repr_duration
