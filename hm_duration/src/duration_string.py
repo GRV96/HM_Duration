@@ -124,4 +124,4 @@ def str_repr_duration(a_str):
 	Returns:
 		bool: True if a_str represents a duration, False otherwise
 	"""
-	return fullmatch(_DUR_STR_PATTERN, a_str)
+	return fullmatch(_DUR_STR_PATTERN, a_str) is not None
