@@ -43,9 +43,6 @@ class HM_Duration:
 		self._minutes = abs(minutes)
 		self._regularize()
 
-		# Comparison methods use this tuple
-		self._cmp_tuple = (self._sign, self._hours, self._minutes)
-
 	def __abs__(self):
 		return HM_Duration(self._hours, self._minutes)
 
@@ -76,7 +73,7 @@ class HM_Duration:
 		if not isinstance(other, self.__class__):
 			return False
 
-		return self._cmp_tuple == other._cmp_tuple
+		return self.to_minutes() == other.to_minutes()
 
 	def __ge__(self, other):
 		"""
@@ -93,7 +90,7 @@ class HM_Duration:
 			TypeError: if other is not an instance of this class
 		"""
 		HM_Duration._raise_except_if_wrong_class(other)
-		return self._cmp_tuple >= other._cmp_tuple
+		return self.to_minutes() >= other.to_minutes()
 
 	def __gt__(self, other):
 		"""
@@ -110,7 +107,7 @@ class HM_Duration:
 			TypeError: if other is not an instance of this class
 		"""
 		HM_Duration._raise_except_if_wrong_class(other)
-		return self._cmp_tuple > other._cmp_tuple
+		return self.to_minutes() > other.to_minutes()
 
 	def __le__(self, other):
 		"""
@@ -127,7 +124,7 @@ class HM_Duration:
 			TypeError: if other is not an instance of this class
 		"""
 		HM_Duration._raise_except_if_wrong_class(other)
-		return self._cmp_tuple <= other._cmp_tuple
+		return self.to_minutes() <= other.to_minutes()
 
 	def __lt__(self, other):
 		"""
@@ -144,7 +141,7 @@ class HM_Duration:
 			TypeError: if other is not an instance of this class
 		"""
 		HM_Duration._raise_except_if_wrong_class(other)
-		return self._cmp_tuple < other._cmp_tuple
+		return self.to_minutes() < other.to_minutes()
 
 	def __mul__(self, number):
 		"""

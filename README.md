@@ -1,7 +1,7 @@
 # hm_duration
 
 Package hm_duration helps working with durations in hours and minutes. Among
-other functionalities, it offers arithmetic operations, comparison string
+other functionalities, it offers arithmetic operations, comparison, string
 representation and instantiation from a string representation.
 
 ### Package content
