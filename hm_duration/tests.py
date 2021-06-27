@@ -105,6 +105,19 @@ def test_repr(hours, minutes, expected_repr):
 		print()
 
 
+def test_sign(hours, minutes, expected_sign):
+	duration = HM_Duration(hours, minutes)
+	actual_sign = duration.sign
+
+	try:
+		assert actual_sign == expected_sign
+	except AssertionError:
+		print("Sign test failed for "
+			+ duration_to_str(hours, minutes) + PERIOD)
+		print_actual_and_expected_values(actual_sign, expected_sign)
+		print()
+
+
 def test_string_rep(hours, minutes, expected_str):
 	duration = HM_Duration(hours, minutes)
 	actual_str = str(duration)
@@ -169,6 +182,14 @@ test_instantiation(-7, -7, -7, -7) # -07:07
 
 test_instantiation(0, -77, -1, -17) # -00:77 -> -01:17
 test_instantiation(-7, -77, -8, -17) # -07:77 -> -08:17
+
+test_sign(0, 1, 1)
+test_sign(1, 0, 1)
+test_sign(1, 1, 1)
+test_sign(0, 0, 0)
+test_sign(0, -1, -1)
+test_sign(-1, 0, -1)
+test_sign(-1, -1, -1)
 
 test_whether_str_repr_dur("7:19", True)
 test_whether_str_repr_dur("07:19", True)

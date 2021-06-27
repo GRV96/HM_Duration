@@ -34,6 +34,8 @@ class HM_Duration:
 
 		if hours < 0 or minutes < 0:
 			self._sign = -1
+		elif hours == 0 and minutes == 0:
+			self._sign = 0
 		else:
 			self._sign = 1
 
@@ -151,6 +153,14 @@ class HM_Duration:
 		"""
 		self._hours += self._minutes // _MINS_IN_HOUR
 		self._minutes = self._minutes % _MINS_IN_HOUR
+
+	@property
+	def sign(self):
+		"""
+		This read-only property returns an integral number that represents the
+		sign of this duration: -1 if negative, 0 if null or 1 if positive.
+		"""
+		return self._sign
 
 	def to_hours(self):
 		"""
