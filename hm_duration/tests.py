@@ -9,7 +9,7 @@ PERIOD = "."
 S_QUOTE_PERIOD = "'."
 
 
-class ArithOperator(Enum):
+class ArithmOperator(Enum):
 	ADD = 0
 	SUB = 1
 	MUL = 2
@@ -53,16 +53,16 @@ def test_absolute_value(hours, minutes, expected_abs_h, expected_abs_m):
 
 
 def test_arithmetic(operand1, operator, operand2, expected_result):
-	if operator == ArithOperator.ADD:
+	if operator == ArithmOperator.ADD:
 		actual_result = operand1 + operand2
 		operator_str = " + "
-	elif operator == ArithOperator.SUB:
+	elif operator == ArithmOperator.SUB:
 		actual_result = operand1 - operand2
 		operator_str = " - "
-	elif operator == ArithOperator.MUL:
+	elif operator == ArithmOperator.MUL:
 		actual_result = operand1 * operand2
 		operator_str = " × "
-	elif operator == ArithOperator.DIV:
+	elif operator == ArithmOperator.DIV:
 		actual_result = operand1 / operand2
 		operator_str = " ÷ "
 
@@ -351,60 +351,60 @@ test_to_minutes(-1, -17, -77)
 test_to_minutes(-2, -17, -137)
 
 test_arithmetic(HM_Duration(12, 17),
-	ArithOperator.ADD, HM_Duration(0, 0), HM_Duration(12, 17))
+	ArithmOperator.ADD, HM_Duration(0, 0), HM_Duration(12, 17))
 test_arithmetic(HM_Duration(12, 17),
-	ArithOperator.ADD, HM_Duration(3, 55), HM_Duration(16, 12))
+	ArithmOperator.ADD, HM_Duration(3, 55), HM_Duration(16, 12))
 test_arithmetic(HM_Duration(12, 17),
-	ArithOperator.ADD, HM_Duration(-3, -55), HM_Duration(8, 22))
+	ArithmOperator.ADD, HM_Duration(-3, -55), HM_Duration(8, 22))
 test_arithmetic(HM_Duration(3, 55),
-	ArithOperator.ADD, HM_Duration(-12, -17), HM_Duration(-8, -22))
+	ArithmOperator.ADD, HM_Duration(-12, -17), HM_Duration(-8, -22))
 
 test_arithmetic(HM_Duration(16, 12),
-	ArithOperator.SUB, HM_Duration(0, 0), HM_Duration(16, 12))
+	ArithmOperator.SUB, HM_Duration(0, 0), HM_Duration(16, 12))
 test_arithmetic(HM_Duration(16, 12),
-	ArithOperator.SUB, HM_Duration(14, 57), HM_Duration(1, 15))
+	ArithmOperator.SUB, HM_Duration(14, 57), HM_Duration(1, 15))
 test_arithmetic(HM_Duration(14, 57),
-	ArithOperator.SUB, HM_Duration(16, 12), HM_Duration(-1, -15))
+	ArithmOperator.SUB, HM_Duration(16, 12), HM_Duration(-1, -15))
 test_arithmetic(HM_Duration(14, 57),
-	ArithOperator.SUB, HM_Duration(-1, -15), HM_Duration(16, 12))
+	ArithmOperator.SUB, HM_Duration(-1, -15), HM_Duration(16, 12))
 
-test_arithmetic(0, ArithOperator.MUL, HM_Duration(2, 2), HM_Duration(0, 0))
+test_arithmetic(0, ArithmOperator.MUL, HM_Duration(2, 2), HM_Duration(0, 0))
 
-test_arithmetic(HM_Duration(2, 2), ArithOperator.MUL, 3, HM_Duration(6, 6))
-test_arithmetic(HM_Duration(2, 2), ArithOperator.MUL, 2.5, HM_Duration(5, 5))
-test_arithmetic(HM_Duration(2, 2), ArithOperator.MUL, 2.7, HM_Duration(5, 29))
+test_arithmetic(HM_Duration(2, 2), ArithmOperator.MUL, 3, HM_Duration(6, 6))
+test_arithmetic(HM_Duration(2, 2), ArithmOperator.MUL, 2.5, HM_Duration(5, 5))
+test_arithmetic(HM_Duration(2, 2), ArithmOperator.MUL, 2.7, HM_Duration(5, 29))
 
-test_arithmetic(-3, ArithOperator.MUL, HM_Duration(2, 2), HM_Duration(-6, -6))
-test_arithmetic(-2.5, ArithOperator.MUL, HM_Duration(2, 2), HM_Duration(-5, -5))
-test_arithmetic(-2.7, ArithOperator.MUL, HM_Duration(2, 2), HM_Duration(-5, -29))
+test_arithmetic(-3, ArithmOperator.MUL, HM_Duration(2, 2), HM_Duration(-6, -6))
+test_arithmetic(-2.5, ArithmOperator.MUL, HM_Duration(2, 2), HM_Duration(-5, -5))
+test_arithmetic(-2.7, ArithmOperator.MUL, HM_Duration(2, 2), HM_Duration(-5, -29))
 
-test_arithmetic(HM_Duration(-2, -2), ArithOperator.MUL, 3, HM_Duration(-6, -6))
-test_arithmetic(HM_Duration(-2, -2), ArithOperator.MUL, 2.5, HM_Duration(-5, -5))
-test_arithmetic(HM_Duration(-2, -2), ArithOperator.MUL, 2.7, HM_Duration(-5, -29))
+test_arithmetic(HM_Duration(-2, -2), ArithmOperator.MUL, 3, HM_Duration(-6, -6))
+test_arithmetic(HM_Duration(-2, -2), ArithmOperator.MUL, 2.5, HM_Duration(-5, -5))
+test_arithmetic(HM_Duration(-2, -2), ArithmOperator.MUL, 2.7, HM_Duration(-5, -29))
 
-test_arithmetic(-3, ArithOperator.MUL, HM_Duration(-2, -2), HM_Duration(6, 6))
-test_arithmetic(-2.5, ArithOperator.MUL, HM_Duration(-2, -2), HM_Duration(5, 5))
-test_arithmetic(-2.7, ArithOperator.MUL, HM_Duration(-2, -2), HM_Duration(5, 29))
+test_arithmetic(-3, ArithmOperator.MUL, HM_Duration(-2, -2), HM_Duration(6, 6))
+test_arithmetic(-2.5, ArithmOperator.MUL, HM_Duration(-2, -2), HM_Duration(5, 5))
+test_arithmetic(-2.7, ArithmOperator.MUL, HM_Duration(-2, -2), HM_Duration(5, 29))
 
-test_arithmetic(HM_Duration(6, 6), ArithOperator.DIV, 3, HM_Duration(2, 2))
-test_arithmetic(HM_Duration(7, 7), ArithOperator.DIV, 2, HM_Duration(3, 34))
-test_arithmetic(HM_Duration(8, 8), ArithOperator.DIV, 0.8, HM_Duration(10, 10))
-test_arithmetic(HM_Duration(11, 11), ArithOperator.DIV, 5.7, HM_Duration(1, 58))
+test_arithmetic(HM_Duration(6, 6), ArithmOperator.DIV, 3, HM_Duration(2, 2))
+test_arithmetic(HM_Duration(7, 7), ArithmOperator.DIV, 2, HM_Duration(3, 34))
+test_arithmetic(HM_Duration(8, 8), ArithmOperator.DIV, 0.8, HM_Duration(10, 10))
+test_arithmetic(HM_Duration(11, 11), ArithmOperator.DIV, 5.7, HM_Duration(1, 58))
 
-test_arithmetic(HM_Duration(6, 6), ArithOperator.DIV, -3, HM_Duration(-2, -2))
-test_arithmetic(HM_Duration(7, 7), ArithOperator.DIV, -2, HM_Duration(-3, -33))
-test_arithmetic(HM_Duration(8, 8), ArithOperator.DIV, -0.8, HM_Duration(-10, -10))
-test_arithmetic(HM_Duration(11, 11), ArithOperator.DIV, -5.7, HM_Duration(-1, -58))
+test_arithmetic(HM_Duration(6, 6), ArithmOperator.DIV, -3, HM_Duration(-2, -2))
+test_arithmetic(HM_Duration(7, 7), ArithmOperator.DIV, -2, HM_Duration(-3, -33))
+test_arithmetic(HM_Duration(8, 8), ArithmOperator.DIV, -0.8, HM_Duration(-10, -10))
+test_arithmetic(HM_Duration(11, 11), ArithmOperator.DIV, -5.7, HM_Duration(-1, -58))
 
-test_arithmetic(HM_Duration(-6, -6), ArithOperator.DIV, 3, HM_Duration(-2, -2))
-test_arithmetic(HM_Duration(-7, -7), ArithOperator.DIV, 2, HM_Duration(-3, -33))
-test_arithmetic(HM_Duration(-8, -8), ArithOperator.DIV, 0.8, HM_Duration(-10, -10))
-test_arithmetic(HM_Duration(-11, -11), ArithOperator.DIV, 5.7, HM_Duration(-1, -58))
+test_arithmetic(HM_Duration(-6, -6), ArithmOperator.DIV, 3, HM_Duration(-2, -2))
+test_arithmetic(HM_Duration(-7, -7), ArithmOperator.DIV, 2, HM_Duration(-3, -33))
+test_arithmetic(HM_Duration(-8, -8), ArithmOperator.DIV, 0.8, HM_Duration(-10, -10))
+test_arithmetic(HM_Duration(-11, -11), ArithmOperator.DIV, 5.7, HM_Duration(-1, -58))
 
-test_arithmetic(HM_Duration(-6, -6), ArithOperator.DIV, -3, HM_Duration(2, 2))
-test_arithmetic(HM_Duration(-7, -7), ArithOperator.DIV, -2, HM_Duration(3, 34))
-test_arithmetic(HM_Duration(-8, -8), ArithOperator.DIV, -0.8, HM_Duration(10, 10))
-test_arithmetic(HM_Duration(-11, -11), ArithOperator.DIV, -5.7, HM_Duration(1, 58))
+test_arithmetic(HM_Duration(-6, -6), ArithmOperator.DIV, -3, HM_Duration(2, 2))
+test_arithmetic(HM_Duration(-7, -7), ArithmOperator.DIV, -2, HM_Duration(3, 34))
+test_arithmetic(HM_Duration(-8, -8), ArithmOperator.DIV, -0.8, HM_Duration(10, 10))
+test_arithmetic(HM_Duration(-11, -11), ArithmOperator.DIV, -5.7, HM_Duration(1, 58))
 
 test_comparison(HM_Duration(2, 2), CmpOperator.GT, HM_Duration(2, 2), False)
 test_comparison(HM_Duration(2, 2), CmpOperator.GT, HM_Duration(2, 1), True)
