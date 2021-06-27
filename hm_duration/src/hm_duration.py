@@ -43,6 +43,9 @@ class HM_Duration:
 		self._minutes = abs(minutes)
 		self._regularize()
 
+		# Comparison methods use this tuple
+		self._cmp_tuple = (self._sign, self._hours, self._minutes)
+
 	def __abs__(self):
 		return HM_Duration(self._hours, self._minutes)
 
@@ -60,12 +63,88 @@ class HM_Duration:
 		return HM_Duration(0, sum_as_mins)
 
 	def __eq__(self, other):
+		"""
+		Determines whether this duration is greater than or equal to another.
+
+		Args:
+			other (HM_Duration): another duration
+
+		Returns:
+			bool: True if this duration is greater than or equal to the other,
+				False otherwise or if other is not an instance of this class
+		"""
 		if not isinstance(other, self.__class__):
 			return False
 
-		return self._sign == other._sign\
-			and self._hours == other._hours\
-			and self._minutes == other._minutes
+		return self._cmp_tuple == other._cmp_tuple
+
+	def __ge__(self, other):
+		"""
+		Determines whether this duration is greater than or equal to another.
+
+		Args:
+			other (HM_Duration): another duration
+
+		Returns:
+			bool: True if this duration is greater than or equal to the other,
+				False otherwise
+
+		Raises:
+			TypeError: if other is not an instance of this class
+		"""
+		HM_Duration._raise_except_if_wrong_class(other)
+		return self._cmp_tuple >= other._cmp_tuple
+
+	def __gt__(self, other):
+		"""
+		Determines whether this duration is greater than another.
+
+		Args:
+			other (HM_Duration): another duration
+
+		Returns:
+			bool: True if this duration is greater than the other,
+				False otherwise
+
+		Raises:
+			TypeError: if other is not an instance of this class
+		"""
+		HM_Duration._raise_except_if_wrong_class(other)
+		return self._cmp_tuple > other._cmp_tuple
+
+	def __le__(self, other):
+		"""
+		Determines whether this duration is lesser than or equal to another.
+
+		Args:
+			other (HM_Duration): another duration
+
+		Returns:
+			bool: True if this duration is lesser than or equal to the other,
+				False otherwise
+
+		Raises:
+			TypeError: if other is not an instance of this class
+		"""
+		HM_Duration._raise_except_if_wrong_class(other)
+		return self._cmp_tuple <= other._cmp_tuple
+
+	def __lt__(self, other):
+		"""
+		Determines whether this duration is lesser than another.
+
+		Args:
+			other (HM_Duration): another duration
+
+		Returns:
+			bool: True if this duration is lesser than the other,
+				False otherwise
+
+		Raises:
+			TypeError: if other is not an instance of this class
+		"""
+		HM_Duration._raise_except_if_wrong_class(other)
+		return self._cmp_tuple < other._cmp_tuple
 
 	def __mul__(self, number):
 		"""
@@ -154,6 +233,21 @@ class HM_Duration:
 		This read-only property returns this duration's number of minutes.
 		"""
 		return self._sign * self._minutes
+
+	@classmethod
+	def _raise_except_if_wrong_class(cls, value):
+		"""
+		Raises a TypeError if the given value is not an instance of this class.
+
+		Args:
+			value: any object
+
+		Raises:
+			TypeError: if value is not an instance of this class
+		"""
+		if not isinstance(value, cls):
+			raise TypeError("The given object is not of type "
+				+ cls.__name__ + ".")
 
 	def _regularize(self):
 		"""
