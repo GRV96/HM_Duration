@@ -93,6 +93,24 @@ def test_instantiation(hours, minutes, expected_h, expected_m):
 		print()
 
 
+def test_opposite(hours, minutes, expected_minus_h, expected_minus_m):
+	duration = HM_Duration(hours, minutes)
+	opposite_dur = -duration
+	actual_minus_h = opposite_dur.hours
+	actual_minus_m = opposite_dur.minutes
+
+	try:
+		assert actual_minus_h == expected_minus_h\
+			and actual_minus_m == expected_minus_m
+	except AssertionError:
+		expected_opposite = HM_Duration(expected_minus_h, expected_minus_m)
+		print("Opposite test failed for "
+			+ duration_to_str(hours, minutes) + PERIOD)
+		print_actual_and_expected_values(
+			repr(opposite_dur), repr(expected_opposite))
+		print()
+
+
 def test_repr(hours, minutes, expected_repr):
 	duration = HM_Duration(hours, minutes)
 	actual_repr = repr(duration)
@@ -182,6 +200,14 @@ test_instantiation(-7, -7, -7, -7) # -07:07
 
 test_instantiation(0, -77, -1, -17) # -00:77 -> -01:17
 test_instantiation(-7, -77, -8, -17) # -07:77 -> -08:17
+
+test_opposite(0, 0, 0, 0)
+test_opposite(0, 13, 0, -13)
+test_opposite(0, -13, 0, 13)
+test_opposite(7, 0, -7, 0)
+test_opposite(-7, 0, 7, 0)
+test_opposite(7, 13, -7, -13)
+test_opposite(-7, -13, 7, 13)
 
 test_sign(0, 1, 1)
 test_sign(1, 0, 1)

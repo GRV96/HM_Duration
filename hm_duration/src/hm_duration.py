@@ -78,6 +78,11 @@ class HM_Duration:
 		prod_as_mins = int(_round_half_up(self.to_minutes() * number))
 		return HM_Duration(0, prod_as_mins)
 
+	def __neg__(self):
+		hours = -self.hours
+		minutes = - self.minutes
+		return HM_Duration(hours, minutes)
+
 	def __rmul__(self, number):
 		return self.__mul__(number)
 
