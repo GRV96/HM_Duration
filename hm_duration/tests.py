@@ -26,6 +26,23 @@ def print_actual_and_expected_values(actual_value, expected_value):
 	print(EXPECTED_STR + str(expected_value))
 
 
+def test_absolute_value(hours, minutes, expected_abs_h, expected_abs_m):
+	duration = HM_Duration(hours, minutes)
+	dur_abs_val = abs(duration)
+	actual_abs_h = dur_abs_val.hours
+	actual_abs_m = dur_abs_val.minutes
+
+	try:
+		assert actual_abs_h == expected_abs_h\
+			and actual_abs_m == expected_abs_m
+	except AssertionError:
+		print("Absolute value test failed for "
+			+ duration_to_str(hours, minutes) + PERIOD)
+		print_actual_and_expected_durations(
+			actual_abs_h, actual_abs_m, expected_abs_h, expected_abs_m)
+		print()
+
+
 def test_arithmetic(operand1, operator, operand2, expected_result):
 	if operator == Operator.ADD:
 		actual_result = operand1 + operand2
@@ -106,8 +123,8 @@ def test_opposite(hours, minutes, expected_minus_h, expected_minus_m):
 		expected_opposite = HM_Duration(expected_minus_h, expected_minus_m)
 		print("Opposite test failed for "
 			+ duration_to_str(hours, minutes) + PERIOD)
-		print_actual_and_expected_values(
-			repr(opposite_dur), repr(expected_opposite))
+		print_actual_and_expected_durations(
+			actual_minus_h, actual_minus_m, expected_minus_h, expected_minus_m)
 		print()
 
 
@@ -216,6 +233,14 @@ test_sign(0, 0, 0)
 test_sign(0, -1, -1)
 test_sign(-1, 0, -1)
 test_sign(-1, -1, -1)
+
+test_absolute_value(0, 1, 0, 1)
+test_absolute_value(1, 0, 1, 0)
+test_absolute_value(1, 1, 1, 1)
+test_absolute_value(0, 0, 0, 0)
+test_absolute_value(0, -1, 0, 1)
+test_absolute_value(-1, 0, 1, 0)
+test_absolute_value(-1, -1, 1, 1)
 
 test_whether_str_repr_dur("7:19", True)
 test_whether_str_repr_dur("07:19", True)

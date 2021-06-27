@@ -43,6 +43,9 @@ class HM_Duration:
 		self._minutes = abs(minutes)
 		self._regularize()
 
+	def __abs__(self):
+		return HM_Duration(self._hours, self._minutes)
+
 	def __add__(self, other):
 		"""
 		Creates an instance that represents the sum of self and other.
@@ -80,7 +83,7 @@ class HM_Duration:
 
 	def __neg__(self):
 		hours = -self.hours
-		minutes = - self.minutes
+		minutes = -self.minutes
 		return HM_Duration(hours, minutes)
 
 	def __rmul__(self, number):
