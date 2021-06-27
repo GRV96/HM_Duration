@@ -43,14 +43,14 @@ def duration_from_str(dur_str):
 
 	if dur_str[0] == _HYPHEN:
 		postive = False
-		offset = 1
+		hour_index = 1
 	else:
 		postive = True
-		offset = 0
+		hour_index = 0
 
 	colon_index = dur_str.index(_COLON)
 
-	hour_str = dur_str[offset: colon_index]
+	hour_str = dur_str[hour_index: colon_index]
 	if len(hour_str) == 2 and hour_str[0] == _ZERO_STR:
 		hour_str = hour_str[1]
 	hours = int(hour_str)
