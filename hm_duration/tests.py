@@ -135,7 +135,8 @@ def test_repr(hours, minutes, expected_repr):
 	try:
 		assert actual_repr == expected_repr
 	except AssertionError:
-		print("repr test failed.")
+		print("repr test failed for "
+			+ duration_to_str(hours, minutes) + PERIOD)
 		print_actual_and_expected_values(actual_repr, expected_repr)
 		print()
 
